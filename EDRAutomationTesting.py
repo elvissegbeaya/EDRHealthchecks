@@ -1037,16 +1037,16 @@ def main():
 
     # Sleeping for 5 minutes to test outside of loop
     # time.sleep(300)
-    time.sleep(30)
-    while True:
-        # Check the current datetime
-        now = datetime.now()
-        # If current time is within the desired range, break the loop
-        if lower_limit <= now <= upper_limit:
-            break
-        # Sleep for a while before checking the time again
-        else:
-            time.sleep(1)
+    time.sleep(10)
+    # while True:
+    #     # Check the current datetime
+    #     now = datetime.now()
+    #     # If current time is within the desired range, break the loop
+    #     if lower_limit <= now <= upper_limit:
+    #         break
+    #     # Sleep for a while before checking the time again
+    #     else:
+    #         time.sleep(1)
 
 
     quit()
