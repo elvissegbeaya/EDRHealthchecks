@@ -859,15 +859,17 @@ def main():
     df = df.sort_values(by=df.columns[0])
     df.to_excel(writer, sheet_name='EDR Report', index=False, header = header)  # header = header
 
-    df = pd.DataFrame(MR_Report_Ids)
-    df = df.sort_values(by=df.columns[0])
-    df.to_excel(writer, sheet_name='Report_Ids', index=False, header=['Job Ids', 'Report IDs'])
+    if len(MR_Report_Ids) != 0:
+        df = pd.DataFrame(MR_Report_Ids)
+        df = df.sort_values(by=df.columns[0])
+        df.to_excel(writer, sheet_name='Report_Ids', index=False, header=['Job Ids', 'Report IDs'])
 
     header2 = ['JobID', 'Report Id', 'Report Date', 'Activity Code', 'Details of Operation']
 
-    df = pd.DataFrame(MR_Report_Comments)
-    df = df.sort_values(by=df.columns[0])
-    df.to_excel(writer, sheet_name='Report_Comment', index=False)  # , header = header2
+    if len(MR_Report_Comments) != 0:
+        df = pd.DataFrame(MR_Report_Comments)
+        df = df.sort_values(by=df.columns[0])
+        df.to_excel(writer, sheet_name='Report_Comment', index=False)  # , header = header2
 
     if len(processedJobList) != 0:
         df = pd.DataFrame(processedJobList)
@@ -1036,36 +1038,19 @@ def main():
     # Sleeping for 5 minutes to test outside of loop
     # time.sleep(300)
     time.sleep(30)
-    while True:
-        # Check the current datetime
-        now = datetime.now()
-        # If current time is within the desired range, break the loop
-        if lower_limit <= now <= upper_limit:
-            break
-        # Sleep for a while before checking the time again
-        else:
-            time.sleep(1)
+    # while True:
+    #     # Check the current datetime
+    #     now = datetime.now()
+    #     # If current time is within the desired range, break the loop
+    #     if lower_limit <= now <= upper_limit:
+    #         break
+    #     # Sleep for a while before checking the time again
+    #     else:
+    #         time.sleep(1)
 
 
     quit()
-        # except Exception as e:
-        #     import os
-        #     import sys
-        #
-        #     exc_type, exc_obj, exc_tb = sys.exc_info()
-        #     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        #     print(
-        #         "ERD Automation Testing - Main Thread - Exception during initialization - ExceptionType: "
-        #         + str(exc_type)
-        #         + " - FileName: "
-        #         + str(fname)
-        #         + " - Line Number: "
-        #         + str(exc_tb.tb_lineno)
-        #         + " - Function: "
-        #         + str(sys._getframe().f_code.co_name)
-        #         + " - Exception Details: "
-        #         + str(e)
-        #     )
+
 
 schedule.every().day.at("06:26").do(main)
 if __name__ == "__main__":
