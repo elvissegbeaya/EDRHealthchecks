@@ -859,15 +859,17 @@ def main():
     df = df.sort_values(by=df.columns[0])
     df.to_excel(writer, sheet_name='EDR Report', index=False, header = header)  # header = header
 
-    df = pd.DataFrame(MR_Report_Ids)
-    df = df.sort_values(by=df.columns[0])
-    df.to_excel(writer, sheet_name='Report_Ids', index=False, header=['Job Ids', 'Report IDs'])
+    if len(MR_Report_Ids) != 0:
+        df = pd.DataFrame(MR_Report_Ids)
+        df = df.sort_values(by=df.columns[0])
+        df.to_excel(writer, sheet_name='Report_Ids', index=False, header=['Job Ids', 'Report IDs'])
 
     header2 = ['JobID', 'Report Id', 'Report Date', 'Activity Code', 'Details of Operation']
 
-    df = pd.DataFrame(MR_Report_Comments)
-    df = df.sort_values(by=df.columns[0])
-    df.to_excel(writer, sheet_name='Report_Comment', index=False)  # , header = header2
+    if len(MR_Report_Comments) != 0:
+        df = pd.DataFrame(MR_Report_Comments)
+        df = df.sort_values(by=df.columns[0])
+        df.to_excel(writer, sheet_name='Report_Comment', index=False)  # , header = header2
 
     if len(processedJobList) != 0:
         df = pd.DataFrame(processedJobList)
