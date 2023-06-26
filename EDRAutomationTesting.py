@@ -152,7 +152,10 @@ def main():
     operators = ['Coterra', 'Upcurve', 'Alchemist', 'Endeavor', 'DB4', 'Piendeda', 'Surge', 'Black Swan', 'ConocoPhillips']
     processedJobList = []
     EDR_Operators = CFG['EDR_OperatorName']
-    EDR_Rigs = CFG['EDR_Rigs']
+    EDR_Rigs = CFG['OdessaRigs'] +CFG['MidconRigs'] +CFG['GulfCoastRigs'] +CFG['DuboisRigs'] +CFG['WillistonRigs']
+
+    for w in EDR_Rigs:
+        print(f'EDR Rigs : {w}')
     EDRJobs = []
     LookupTable = []
     MR_Report_Ids = []
@@ -167,15 +170,15 @@ def main():
     jobcount = 1
     EDRchoice = CFG['ActiveEDRJobsOnly']
     OdessaRigs = []
-
     MidconRigs = []
-
-
     GulfCoastRigs = []
-
     DuboisRigs = []
-
     WillistonRigs = []
+    OdessaList = []
+    MidconList = []
+    GulfCoastList = []
+    DuboisList = []
+    WillistonList = []
 
 
     report = ''
@@ -207,6 +210,17 @@ def main():
         for key, value in lookup_table.items():
             if w in key:
                 tmpJobs.append(value)
+                if w in CFG['OdessaRigs']:
+                    OdessaList.append(value)
+                if w in CFG['MidconRigs']:
+                    MidconList.append(value)
+                if w in CFG['GulfCoastRigs']:
+                    GulfCoastList.append(value)
+                if w in CFG['DuboisRigs']:
+                    DuboisList.append(value)
+                if w in CFG['WillistonRigs']:
+                    WillistonList.append(value)
+
 
     # print("Temp Jobs:")
     # for t in tmpJobs:
@@ -367,15 +381,15 @@ def main():
                 # appending to containers
                 EDRJobs.append(holder)
 
-                if well in CFG['OdessaRigs']:
+                if well in OdessaList:
                     OdessaRigs.append(holder)
-                elif well in CFG['MidconRigs']:
+                elif well in MidconList:
                     MidconRigs.append(holder)
-                elif well in CFG['GulfCoastRigs']:
+                elif well in GulfCoastList:
                     GulfCoastRigs.append(holder)
-                elif well in CFG['DuboisRigs']:
+                elif well in DuboisList:
                     DuboisRigs.append(holder)
-                elif well in CFG['WillistonRigs']:
+                elif well in WillistonList:
                     WillistonRigs.append(holder)
                 else:
                     print('nothing to append, please check to make sure the job number is in the correct container in cfg file')
@@ -432,15 +446,15 @@ def main():
                 # appending to containers
                 EDRJobs.append(holder)
 
-                if well in CFG['OdessaRigs']:
+                if well in OdessaList:
                     OdessaRigs.append(holder)
-                elif well in CFG['MidconRigs']:
+                elif well in MidconList:
                     MidconRigs.append(holder)
-                elif well in CFG['GulfCoastRigs']:
+                elif well in GulfCoastList:
                     GulfCoastRigs.append(holder)
-                elif well in CFG['DuboisRigs']:
+                elif well in DuboisList:
                     DuboisRigs.append(holder)
-                elif well in CFG['WillistonRigs']:
+                elif well in WillistonList:
                     WillistonRigs.append(holder)
                 else:
                     print('nothing to append, please check to make sure the job number is in the correct container in cfg file')
@@ -825,15 +839,15 @@ def main():
             #appending to containers
             EDRJobs.append(holder)
 
-            if well in CFG['OdessaRigs']:
+            if well in OdessaList:
                 OdessaRigs.append(holder)
-            elif well in CFG['MidconRigs']:
+            elif well in MidconList:
                 MidconRigs.append(holder)
-            elif well in CFG['GulfCoastRigs']:
+            elif well in GulfCoastList:
                 GulfCoastRigs.append(holder)
-            elif well in CFG['DuboisRigs']:
+            elif well in DuboisList:
                 DuboisRigs.append(holder)
-            elif well in CFG['WillistonRigs']:
+            elif well in WillistonList:
                 WillistonRigs.append(holder)
             else:
                 print('nothing to append, please check to make sure the job number is in the correct container in cfg file')
@@ -905,7 +919,7 @@ def main():
         ws = writer.book.create_sheet('Odessa')
         for i, head in enumerate(header, start=1):
             ws.cell(row=1, column=i, value=head)
-            ws.cell = Font(bold=True)
+
 
     if len(MidconRigs) != 0:
         df = pd.DataFrame(MidconRigs)
@@ -916,7 +930,7 @@ def main():
         ws = writer.book.create_sheet('MIDCON')
         for i, head in enumerate(header, start=1):
             ws.cell(row=1, column=i, value=head)
-            ws.cell = Font(bold=True)
+
 
     if len(GulfCoastRigs) != 0:
         df = pd.DataFrame(GulfCoastRigs)
@@ -927,7 +941,7 @@ def main():
         ws = writer.book.create_sheet('Gulf Coast')
         for i, head in enumerate(header, start=1):
             ws.cell(row=1, column=i, value=head)
-            ws.cell = Font(bold=True)
+
 
     if len(DuboisRigs) != 0:
         df = pd.DataFrame(DuboisRigs)
@@ -1037,7 +1051,7 @@ def main():
 
     # Sleeping for 5 minutes to test outside of loop
     # time.sleep(300)
-    time.sleep(10)
+    time.sleep(30)
     # while True:
     #     # Check the current datetime
     #     now = datetime.now()
@@ -1050,24 +1064,7 @@ def main():
 
 
     quit()
-        # except Exception as e:
-        #     import os
-        #     import sys
-        #
-        #     exc_type, exc_obj, exc_tb = sys.exc_info()
-        #     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        #     print(
-        #         "ERD Automation Testing - Main Thread - Exception during initialization - ExceptionType: "
-        #         + str(exc_type)
-        #         + " - FileName: "
-        #         + str(fname)
-        #         + " - Line Number: "
-        #         + str(exc_tb.tb_lineno)
-        #         + " - Function: "
-        #         + str(sys._getframe().f_code.co_name)
-        #         + " - Exception Details: "
-        #         + str(e)
-        #     )
+
 
 schedule.every().day.at("06:26").do(main)
 if __name__ == "__main__":
