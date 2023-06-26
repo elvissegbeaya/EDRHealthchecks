@@ -1,0 +1,32 @@
+name: My GitHub Action
+on:
+  schedule:
+    - cron:  '30 11 * * 1-5'
+  push:
+    branches: [ EDR ]
+  pull_request:
+    branches: [ EDR ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout repository
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Step 2: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: |
+        pip install pandas tenacity requests pydantic openpyxl sseclient retry schedule
+
+    # Step 4: Run the script
+    - name: Run the script
+      run: python EDRAutomationTesting.py
