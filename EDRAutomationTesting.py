@@ -858,7 +858,7 @@ def main():
         print(report)
         logging.error("Error sending request to server")
         logging.error(f"Exception: {ex}")
-        pass
+        passd
 
     # Writing DataFrame to Excel sheet
     writer = pd.ExcelWriter(f'EDRJobsListTest {today} .xlsx', engine='openpyxl')
