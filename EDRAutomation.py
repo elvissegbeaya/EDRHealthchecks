@@ -657,8 +657,8 @@ def main():
 
     header2 = ['JobID', 'Report Id', 'Report Date', 'Activity Code', 'Details of Operation']
 
-    df = pd.DataFrame(MR_Report_Comments)
-    df.to_excel(writer, sheet_name='Report_Comment', index=False)  # , header = header2
+    # df = pd.DataFrame(MR_Report_Comments)
+    # df.to_excel(writer, sheet_name='Report_Comment', index=False)  # , header = header2
 
     df = pd.DataFrame(processedJobList)
     df.to_excel(writer, sheet_name='Jobs not found', index=False, )
